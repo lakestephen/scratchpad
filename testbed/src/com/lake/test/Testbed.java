@@ -2,27 +2,22 @@ package com.lake.test;
 
 import org.junit.Test;
 
+
 public class Testbed {
-	
-	Testbed () {
-	//	this("TEST");
-	}
 
-
-	public Testbed(String string) {
-		this();
-	}
 	@Test
-	public void testbed() {
-		
-		Integer init = new Integer(2);
-		Number num = init;
-		Integer i = (Integer) num;
-		Long l = (Long) num;
-		
-	//	String s = (String)num;
+	public void test() {
+		System.out.println(new B().foo());
+	
 	}
-
-
+	
+	
+	public class A {
+		public boolean foo() {
+			return getClass() == A.class;
+		}
+	}
+	public class B extends A{
+	}
 
 }
