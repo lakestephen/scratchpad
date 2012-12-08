@@ -31,7 +31,9 @@ public class KeithExtractor {
             String contents = extractFileContents(args.getSourceFileName());
             String[] records = splitIntoRecords(contents);
             System.out.println("Found [" + records.length + "] records");
-            extractData(records);
+            ExtractedData[] data = extractData(records);
+            String destFileName = getDestinationFileName(args.getDestinationFileName());
+            writeData(data);
         }
         catch (Exception e) {
             System.out.println("ERROR: " + e);
@@ -41,57 +43,7 @@ public class KeithExtractor {
         }
     }
 
-    private void extractData(String[] records) {
-		ExtractedData[] extractedData = new ExtractedData[records.length];
-        for (int i=0;i<records.length;i++) {
-			extractedData[i] = new ExtractedData();
-
-			Integer numberOfOnStates = extractIntegerFromGroup(NUMBER_OF_ON_STATES, records[i],1,1);
-			extractedData[i].setNumberOfOnStates(numberOfOnStates);
-
-			Integer totalPacketsReceived = extractIntegerFromGroup(TOTAL_PACKETS_RECEIVED, records[i],1,1);
-			extractedData[i].setTotalPacketsReceived(totalPacketsReceived);
-
-			Integer minDelay = extractIntegerFromGroup(DELAY, records[i],1,1);
-			extractedData[i].setMinDelay(minDelay);
-
-			Integer averageDelay = extractIntegerFromGroup(DELAY, records[i],1,2);
-			extractedData[i].setAverageDelay(averageDelay);
-
-			Integer maxDelay = extractIntegerFromGroup(DELAY, records[i],1,3);
-			extractedData[i].setMaxDelay(maxDelay);
-
-			Integer port0PacketsSent = extractIntegerFromGroup(PACKETS_SENT, records[i],1,1);
-			extractedData[i].setPort0PacketsSent(port0PacketsSent);
-
-			Integer port1PacketsSent = extractIntegerFromGroup(PACKETS_SENT, records[i],2,1);
-			extractedData[i].setPort1PacketsSent(port1PacketsSent);
-
-			System.out.print("[" + i + "] = ");
-			System.out.println(extractedData[i]);
-        }
-    }
-
-	private Integer extractIntegerFromGroup(Pattern pattern, String record, int findIteration, int group) {
-		Integer value = null;
-		Matcher matcher = pattern.matcher(record);
-		while (matcher.find()) {
-			if (findIteration > 1) {
-				findIteration--;
-			}
-			else {
-				String extractedGroup = matcher.group(group);
-				if (extractedGroup != null && !extractedGroup.isEmpty()) {
-					value = Integer.parseInt(extractedGroup);
-				}
-				break;
-			}
-		}
-
-		return value;
-	}
-
-	private String extractFileContents(String fileName) throws IOException {
+    private String extractFileContents(String fileName) throws IOException {
         File file = new File(fileName);
         System.out.println("Extracting from [" + file.getCanonicalPath() + "]");
         FileReader fr = new FileReader(file);
@@ -120,6 +72,65 @@ public class KeithExtractor {
         }
         return modifiedRecords;
     }
+
+    private ExtractedData[] extractData(String[] records) {
+		ExtractedData[] extractedData = new ExtractedData[records.length];
+        for (int i=0;i<records.length;i++) {
+			extractedData[i] = new ExtractedData();
+
+			Integer numberOfOnStates = extractIntegerFromGroup(NUMBER_OF_ON_STATES, records[i],1,1);
+			extractedData[i].setNumberOfOnStates(numberOfOnStates);
+
+			Integer totalPacketsReceived = extractIntegerFromGroup(TOTAL_PACKETS_RECEIVED, records[i],1,1);
+			extractedData[i].setTotalPacketsReceived(totalPacketsReceived);
+
+			Integer minDelay = extractIntegerFromGroup(DELAY, records[i],1,1);
+			extractedData[i].setMinDelay(minDelay);
+
+			Integer averageDelay = extractIntegerFromGroup(DELAY, records[i],1,2);
+			extractedData[i].setAverageDelay(averageDelay);
+
+			Integer maxDelay = extractIntegerFromGroup(DELAY, records[i],1,3);
+			extractedData[i].setMaxDelay(maxDelay);
+
+			Integer port0PacketsSent = extractIntegerFromGroup(PACKETS_SENT, records[i],1,1);
+			extractedData[i].setPort0PacketsSent(port0PacketsSent);
+
+			Integer port1PacketsSent = extractIntegerFromGroup(PACKETS_SENT, records[i],2,1);
+			extractedData[i].setPort1PacketsSent(port1PacketsSent);
+
+			System.out.print("[" + i + "] = ");
+			System.out.println(extractedData[i]);
+        }
+
+        return extractedData;
+    }
+
+    private String getDestinationFileName(String destinationFileName) {
+    }
+
+    private void writeData(ExtractedData[] data, String destinationFileName) {
+
+    }
+
+	private Integer extractIntegerFromGroup(Pattern pattern, String record, int findIteration, int group) {
+		Integer value = null;
+		Matcher matcher = pattern.matcher(record);
+		while (matcher.find()) {
+			if (findIteration > 1) {
+				findIteration--;
+			}
+			else {
+				String extractedGroup = matcher.group(group);
+				if (extractedGroup != null && !extractedGroup.isEmpty()) {
+					value = Integer.parseInt(extractedGroup);
+				}
+				break;
+			}
+		}
+
+		return value;
+	}
 
     private void writeUsage() {
         System.out.println("Extracts Keith's Files");

@@ -23,6 +23,10 @@ public class ExtractedArgs {
         return sourceFileName;
     }
 
+    public String getDestinationFileName() {
+        return destinationFileName;
+    }
+
     public boolean isHelpRequired() {
         return helpRequired;
     }
