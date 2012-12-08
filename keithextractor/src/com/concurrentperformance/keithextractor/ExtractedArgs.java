@@ -30,6 +30,4 @@ public class ExtractedArgs {
     public boolean isHelpRequired() {
         return helpRequired;
     }
-
-
 }

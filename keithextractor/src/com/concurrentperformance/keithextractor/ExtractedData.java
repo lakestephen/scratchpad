@@ -1,5 +1,9 @@
 package com.concurrentperformance.keithextractor;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.ParameterList;
+
+import javax.print.attribute.Size2DSyntax;
+
 /**
  * TODO
  *
@@ -14,6 +18,8 @@ public class ExtractedData {
 	private Integer maxDelay;
 	private Integer port0PacketsSent;
 	private Integer port1PacketsSent;
+	private ParameterList totalPacketsSent;
+	private Size2DSyntax packetLoss;
 
 	public Integer getNumberOfOnStates() {
 		return numberOfOnStates;
@@ -69,6 +75,20 @@ public class ExtractedData {
 
 	public void setPort1PacketsSent(Integer port1PacketsSent) {
 		this.port1PacketsSent = port1PacketsSent;
+	}
+
+	public Integer getTotalPacketsSent() {
+		return port0PacketsSent.intValue() + port1PacketsSent.intValue();
+	}
+
+	public Integer getPacketLoss() {
+		return getTotalPacketsSent().intValue() - getTotalPacketsReceived().intValue();
+	}
+
+	public Double getMeasuredPLP() {
+		int packetloss = getPacketLoss().intValue();
+		int totalPacketsSent = getTotalPacketsSent().intValue();
+		return (double)packetloss/(double)totalPacketsSent;
 	}
 
 	@Override

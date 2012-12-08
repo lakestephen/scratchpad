@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="keithextract">
+    <output-path>$PROJECT_DIR$/keithextractor/artifacts</output-path>
+    <root id="archive" name="keithextract.jar">
+      <element id="module-output" name="keithextractor" />
+    </root>
+  </artifact>
+</component>
