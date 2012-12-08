@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/keithsextractor/keithsextractor.iml" filepath="$PROJECT_DIR$/keithsextractor/keithsextractor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/keithextractor/keithextractor.iml" filepath="$PROJECT_DIR$/keithextractor/keithextractor.iml" />
     </modules>
   </component>
 </project>

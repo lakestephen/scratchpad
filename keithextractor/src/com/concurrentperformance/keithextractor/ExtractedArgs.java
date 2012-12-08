@@ -9,16 +9,18 @@ package com.concurrentperformance.keithextractor;
  */
 public class ExtractedArgs {
 
-    private final String fileName;
+    private final String sourceFileName;
+	private final String destinationFileName;
     private final boolean helpRequired;
 
-    public ExtractedArgs(String fileName, boolean helpRequired) {
-        this.fileName = fileName;
+    public ExtractedArgs(String sourceFileName, String destinationFileName, boolean helpRequired) {
+        this.sourceFileName = sourceFileName;
+		this.destinationFileName = destinationFileName;
         this.helpRequired = helpRequired;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getSourceFileName() {
+        return sourceFileName;
     }
 
     public boolean isHelpRequired() {

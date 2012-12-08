@@ -13,7 +13,13 @@ public class KeithExtractor {
     private ArgFactory argFactory = new ArgFactory();
     private String lineSep = System.getProperty("line.separator");
 
-	private static final Pattern NUMBER_OF_ON_STATES = Pattern.compile("P_RECEIVESYNC  IN_SYNC(.*)PR_TOTAL.*");
+	private static final Pattern NUMBER_OF_ON_STATES = Pattern.compile("P_RECEIVESYNC  IN_SYNC(.*)PR_TOTAL");
+	private static final Pattern TOTAL_PACKETS_RECEIVED = Pattern.compile("PR_TOTAL  \\d \\d \\d{11} (\\d{8})");
+	private static final Pattern DELAY = Pattern.compile("PR_TPLDLATENCY  \\[3\\]  (\\d*) (\\d*) (\\d*)");
+	private static final Pattern PACKETS_SENT = Pattern.compile("PT_STREAM  \\[0\\]  0 0 \\d{11} (\\d*)");
+
+
+
 
 
 	public void run(String[] rawArgs) {
@@ -22,7 +28,7 @@ public class KeithExtractor {
             if (args.isHelpRequired()) {
                 writeUsage();
             }
-            String contents = extractFileContents(args.getFileName());
+            String contents = extractFileContents(args.getSourceFileName());
             String[] records = splitIntoRecords(contents);
             System.out.println("Found [" + records.length + "] records");
             extractData(records);
@@ -36,21 +42,49 @@ public class KeithExtractor {
     }
 
     private void extractData(String[] records) {
+		ExtractedData[] extractedData = new ExtractedData[records.length];
         for (int i=0;i<records.length;i++) {
-			ExtractedData extractedData = new ExtractedData();
-			Integer numberOfOnStates = extractIntegerFromGroup1(NUMBER_OF_ON_STATES,records[i]);
-			extractedData.setNumberOfOnStates(numberOfOnStates);
-			System.out.println(extractedData);
+			extractedData[i] = new ExtractedData();
+
+			Integer numberOfOnStates = extractIntegerFromGroup(NUMBER_OF_ON_STATES, records[i],1,1);
+			extractedData[i].setNumberOfOnStates(numberOfOnStates);
+
+			Integer totalPacketsReceived = extractIntegerFromGroup(TOTAL_PACKETS_RECEIVED, records[i],1,1);
+			extractedData[i].setTotalPacketsReceived(totalPacketsReceived);
+
+			Integer minDelay = extractIntegerFromGroup(DELAY, records[i],1,1);
+			extractedData[i].setMinDelay(minDelay);
+
+			Integer averageDelay = extractIntegerFromGroup(DELAY, records[i],1,2);
+			extractedData[i].setAverageDelay(averageDelay);
+
+			Integer maxDelay = extractIntegerFromGroup(DELAY, records[i],1,3);
+			extractedData[i].setMaxDelay(maxDelay);
+
+			Integer port0PacketsSent = extractIntegerFromGroup(PACKETS_SENT, records[i],1,1);
+			extractedData[i].setPort0PacketsSent(port0PacketsSent);
+
+			Integer port1PacketsSent = extractIntegerFromGroup(PACKETS_SENT, records[i],2,1);
+			extractedData[i].setPort1PacketsSent(port1PacketsSent);
+
+			System.out.print("[" + i + "] = ");
+			System.out.println(extractedData[i]);
         }
     }
 
-	private Integer extractIntegerFromGroup1(Pattern pattern, String record) {
+	private Integer extractIntegerFromGroup(Pattern pattern, String record, int findIteration, int group) {
 		Integer value = null;
 		Matcher matcher = pattern.matcher(record);
-		if (matcher.matches()) {
-			String extractedGroup1 = matcher.group(1);
-			if (extractedGroup1 != null && !extractedGroup1.isEmpty()) {
-				value = Integer.parseInt(extractedGroup1);
+		while (matcher.find()) {
+			if (findIteration > 1) {
+				findIteration--;
+			}
+			else {
+				String extractedGroup = matcher.group(group);
+				if (extractedGroup != null && !extractedGroup.isEmpty()) {
+					value = Integer.parseInt(extractedGroup);
+				}
+				break;
 			}
 		}
 
@@ -89,6 +123,6 @@ public class KeithExtractor {
 
     private void writeUsage() {
         System.out.println("Extracts Keith's Files");
-        System.out.println("KeithExtractorApp <source>");
+        System.out.println("KeithExtractorApp <source> <destination>");
     }
 }

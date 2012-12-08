@@ -12,7 +12,7 @@ import com.google.common.base.Preconditions;
 public class ArgFactory {
 
     private static final int EXPECTED_MIN_ARG_COUNT = 1;
-    private static final int EXPECTED_MAX_ARG_COUNT = 1;
+    private static final int EXPECTED_MAX_ARG_COUNT = 2;
     private static final String HELP_REQUIRED_OPTION = "\\?";
 
 
@@ -24,7 +24,8 @@ public class ArgFactory {
 
         boolean helpRequired = false;
 
-        String fileName = args[0];
+        String sourceFileName = args[0];
+		String destinationFileName = (args.length > 1)?args[1]:null;
 
         for (String arg : args) {
             if (HELP_REQUIRED_OPTION.equals(arg)) {
@@ -33,7 +34,7 @@ public class ArgFactory {
         }
 
 
-        ExtractedArgs extractedArgs = new ExtractedArgs(fileName, helpRequired);
+        ExtractedArgs extractedArgs = new ExtractedArgs(sourceFileName, destinationFileName, helpRequired);
         return extractedArgs;
     }
 
