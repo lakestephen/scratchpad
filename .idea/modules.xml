@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/keithextractor/keithextractor.iml" filepath="$PROJECT_DIR$/keithextractor/keithextractor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testbed/testbed.iml" filepath="$PROJECT_DIR$/testbed/testbed.iml" />
     </modules>
   </component>
 </project>

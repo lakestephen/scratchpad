@@ -6,8 +6,9 @@
   <component name="FindBugsConfigurable">
     <option name="make" value="true" />
     <option name="effort" value="default" />
-    <option name="priority" value="Medium" />
+    <option name="priority" value="Low" />
   </component>
+  <component name="IdProvider" IDEtalkID="C4A2F02E6DBB4E5A034CD3715F162875" />
   <component name="IvyIDEA.ProjectSettings">
     <option name="artifactTypeSettings">
       <ArtifactTypeSettings>
@@ -16,12 +17,15 @@
         <option name="sourcesTypes" value="source, src, sources, srcs" />
       </ArtifactTypeSettings>
     </option>
-    <option name="ivySettingsFile" value="D:\projects\ivy\ivysettings.xml" />
+    <option name="ivyLogLevelThreshold" value="Info" />
+    <option name="ivySettingsFile" value="C:\projects\testbed\ivysettings.xml" />
+    <option name="libraryNameIncludesConfiguration" value="true" />
+    <option name="libraryNameIncludesModule" value="true" />
     <option name="propertiesSettings">
       <PropertiesSettings />
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="SuppressionsComponent">
