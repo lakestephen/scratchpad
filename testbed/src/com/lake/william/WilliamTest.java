@@ -4,18 +4,15 @@ import java.util.Scanner;
 
 public class WilliamTest {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String arg[]) {		Scanner input = new Scanner(System.in); // Decl. & init. a Scanner.
-
+/*
 		while (true) {
 			System.out.print("What is your age? >"); 
 			String age = input.next(); 
 			System.out.print("What is your hair color? >"); 
 			String hairColor = input.next(); 
 			System.out.println(); 
-	
+
 			String name = "sorry i don't know your name";
 			try {
 				int iAge = Integer.parseInt(age);
@@ -63,7 +60,7 @@ public class WilliamTest {
 
 			System.out.println("You name is " + name + ". I am clever arnt I");
 			System.out.println(); 
-		}
+		}*/
 	}
 
 }

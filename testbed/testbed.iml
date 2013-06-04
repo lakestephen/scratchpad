@@ -30,21 +30,19 @@
     <orderEntry type="module-library">
       <library name="IvyIDEA-testbed-lib">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../ivy/cache/com.caucho/hessian/jars/hessian-4.0.7.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../ivy/cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../ivy/cache/log4j/log4j/jars/log4j-1.2.16.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../ivy/cache/com.google.guava/guava/jars/guava-14.0-rc2.jar!/" />
+          <root url="jar://$IVY_CACHE_HOME$/cache/com.caucho/hessian/jars/hessian-4.0.7.jar!/" />
+          <root url="jar://$IVY_CACHE_HOME$/cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar!/" />
+          <root url="jar://$IVY_CACHE_HOME$/cache/log4j/log4j/jars/log4j-1.2.16.jar!/" />
+          <root url="jar://$IVY_CACHE_HOME$/cache/com.google.guava/guava/jars/guava-14.0-rc2.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../ivy/cache/com.google.guava/guava/jars/guava-14.0-rc2-sources.jar!/" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library name="IvyIDEA-testbed-testlib">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../ivy/cache/junit/junit/jars/junit-4.10.jar!/" />
+          <root url="jar://$IVY_CACHE_HOME$/cache/junit/junit/jars/junit-4.10.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
