@@ -13,8 +13,8 @@ public class StubSlowService implements SlowService {
 	@Override
 	public Result getResult(String canonicalURL) {
 		if (callCount.getAndIncrement() % 3 == 0) {
-			return new Result(canonicalURL);
+			return null;
 		}
-		return null;
+		return new Result(canonicalURL);
 	}
 }
