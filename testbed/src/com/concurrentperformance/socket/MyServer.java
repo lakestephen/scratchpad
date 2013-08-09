@@ -23,7 +23,7 @@ public class MyServer {
 
 	static Executor executor =  Executors.newSingleThreadExecutor();
 
-	public static int count = 100 * 1000;
+	public static long count = 100 * 1000000000;
 
 	public static void main(String[] args) throws IOException, InterruptedException {
         new MyServer().run();
@@ -33,7 +33,7 @@ public class MyServer {
 		ServerSocket ss = ServerSocketFactory.getDefault().createServerSocket(PORT);
 	    for (;;) {
             Socket s = ss.accept();
-		    s.setTcpNoDelay(true);
+		//    s.setTcpNoDelay(true);
 		    SocketReadHandler handler = new SocketReadHandler(s);
 		    executor.execute(handler);
 	    }
@@ -49,20 +49,22 @@ public class MyServer {
 
 		public void run() {
 			try {
-				socket.setTcpNoDelay(true);
+			//	socket.setTcpNoDelay(true);
+
 				System.out.println("New Socket");
-				InputStream is = socket.getInputStream();
+				//InputStream is = socket.getInputStream();
 				OutputStream os = socket.getOutputStream();
-				Hessian2Input hi = new Hessian2Input(is);
+//				Hessian2Input hi = new Hessian2Input(is);
 				Hessian2Output ho = new Hessian2Output(os);
-				long overallStart = System.nanoTime();
-				for(int i=0;i< count;i++){
+//				long overallStart = System.nanoTime();
+				for(long i=0L;i< count;i++){
+					System.out.println("Write" + i);
 					ho.writeLong(i);
 					ho.flush();
-					long start = hi.readLong();
+					//long start = hi.readLong();
 				}
-				long overallEnd = System.nanoTime();
-				System.out.println("Overall[" + (count *2)+ "]:" + ((overallEnd-overallStart)/(1000 * 1000)) + "MS");
+//				long overallEnd = System.nanoTime();
+//				System.out.println("Overall[" + (count *2)+ "]:" + ((overallEnd-overallStart)/(1000 * 1000)) + "MS");
 
 				os.close();
 				socket.close();

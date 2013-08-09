@@ -1,12 +1,10 @@
 package com.concurrentperformance.socket;
 
 import com.caucho.hessian.io.Hessian2Input;
-import com.caucho.hessian.io.Hessian2Output;
 
 import javax.net.SocketFactory;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -20,17 +18,19 @@ public class MyClient {
         new MyClient().run();
     }
 
-	private void run() throws IOException {
+	private void run() throws IOException, InterruptedException {
         Socket socket = SocketFactory.getDefault().createSocket("localhost", MyServer.PORT);
-        socket.setTcpNoDelay(true);
+//        socket.setTcpNoDelay(true);
 		InputStream is = socket.getInputStream();
-		OutputStream os = socket.getOutputStream();
+//		OutputStream os = socket.getOutputStream();
 		Hessian2Input hi = new Hessian2Input(is);
-		Hessian2Output ho = new Hessian2Output(os);
+//		Hessian2Output ho = new Hessian2Output(os);
 		for (;;) {
 			long l = hi.readLong();
-			ho.writeLong(l);
-			ho.flush();
+			System.out.println("Read" + l);
+			Thread.sleep(50);
+//			ho.writeLong(l);
+//			ho.flush();
 		}
 		//is.close();
 	//	s.close();

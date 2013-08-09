@@ -7,6 +7,7 @@
     <option name="make" value="true" />
     <option name="effort" value="default" />
     <option name="priority" value="Low" />
+    <option name="excludeFilter" value="" />
   </component>
   <component name="IdProvider" IDEtalkID="C4A2F02E6DBB4E5A034CD3715F162875" />
   <component name="IvyIDEA.ProjectSettings">
@@ -29,8 +30,7 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="SuppressionsComponent">
-    <option name="suppCommentEnabled" value="false" />
-    <option name="suppComment" value="SUPPRESS CODING RULES" />
+    <option name="suppComments" value="[]" />
   </component>
   <component name="SvnBranchConfigurationManager">
     <option name="myConfigurationMap">
