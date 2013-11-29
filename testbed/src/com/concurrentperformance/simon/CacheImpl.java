@@ -37,7 +37,8 @@ public class CacheImpl implements Cache {
 	}
 
 	private ListenableFuture<Result> handleCacheMiss(String canonicalURL) {
-		ListenableFuture<Result> future;SettableFuture<Result> newResult = SettableFuture.create();
+		ListenableFuture<Result> future;
+		SettableFuture<Result> newResult = SettableFuture.create();
 		future = cache.putIfAbsent(canonicalURL, newResult);
 		if (future == null) {
 			future = newResult;
