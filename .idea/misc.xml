@@ -19,7 +19,7 @@
       </ArtifactTypeSettings>
     </option>
     <option name="ivyLogLevelThreshold" value="Info" />
-    <option name="ivySettingsFile" value="D:\projects\testbed\ivysettings.xml" />
+    <option name="ivySettingsFile" value="$IVY_CACHE_HOME$/ivysettings.xml" />
     <option name="libraryNameIncludesConfiguration" value="true" />
     <option name="libraryNameIncludesModule" value="true" />
     <option name="propertiesSettings">
