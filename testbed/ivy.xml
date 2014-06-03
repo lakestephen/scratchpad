@@ -14,11 +14,14 @@
 
     <dependencies>
 
-		<dependency org="junit" name="junit" rev="4.10" conf="testlib"/>
         <dependency name="hessian" rev="4.0.7" org="com.caucho"/>
         <dependency name="guava" rev="14.0-rc2" org="com.google.guava"/>
         <dependency name="commons-logging" rev="1.1.1" org="commons-logging"/>
         <dependency name="log4j" rev="1.2.16" org="log4j"/>
+
+        <dependency org="junit" name="junit" rev="4.10" conf="testlib"/>
+        <dependency org="org.mockito" name="mockito-all" rev="1.9.0" conf="testlib"/>
+
     </dependencies>
 
 </ivy-module>
