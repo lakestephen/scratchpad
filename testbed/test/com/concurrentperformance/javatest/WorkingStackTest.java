@@ -11,10 +11,10 @@ import static junit.framework.Assert.assertEquals;
  *
  * @author Lake
  */
-public class StackStephenTest {
+public class WorkingStackTest {
 
 
-	StackStephen stack = new StackStephen();
+	WorkingStack stack = new WorkingStack();
 
 	@Test
 	public void pushItemGrowsStackSize() {

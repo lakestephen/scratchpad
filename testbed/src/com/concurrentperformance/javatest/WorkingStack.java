@@ -5,7 +5,7 @@ package com.concurrentperformance.javatest;
  *
  * @author Steve Lake
  */
-public class StackStephen {
+public class WorkingStack {
 
     private long[] stackArray = new long[10];
     private int top = -1;
