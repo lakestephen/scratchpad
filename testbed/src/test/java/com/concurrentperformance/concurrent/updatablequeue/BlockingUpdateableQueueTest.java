@@ -1,8 +1,8 @@
 package com.concurrentperformance.concurrent.updatablequeue;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class BlockingUpdateableQueueTest {
 
-	private final Log log = LogFactory.getLog(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public static final String VALUE = "VALUE";
 	public static final String VALUE_NEW = "VALUE_NEW";

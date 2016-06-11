@@ -1,8 +1,8 @@
 package com.concurrentperformance.property;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -13,13 +13,13 @@ import java.util.Map;
  */
 public class PropertyTest {
 
-	private final Log log = LogFactory.getLog(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Test
 	public void doIt() {
 		for (Map.Entry<Object, Object> objectObjectEntry : System.getProperties().entrySet()) {
 
-			log.info(objectObjectEntry);
+			log.info(objectObjectEntry.toString());
 		}
 	}
 }

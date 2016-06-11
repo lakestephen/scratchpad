@@ -1,8 +1,9 @@
 package com.concurrentperformance.executors;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import org.apache.log4j.Logger;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ExecutorTest {
 
-	private final Logger log = Logger.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Test
 	public void test() throws InterruptedException {
@@ -41,7 +42,7 @@ public class ExecutorTest {
 
 		for(int i=0;i<20;i++) {
 			Thread.sleep(500);
-			log.info(executorService);
+			log.info(executorService.toString());
 		}
 	}
 
