@@ -17,6 +17,8 @@ dependencies {
     compile 'net.jcip:jcip-annotations:1.0'
 
     compile 'com.caucho:hessian:4.0.7'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+
 
     // Logging
     compile 'org.slf4j:slf4j-api:1.7.21'
