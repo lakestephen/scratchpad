@@ -1,17 +1,12 @@
 package com.concurrentperformance.xor;
 
+import com.google.common.base.Splitter;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,13 +24,13 @@ import static org.junit.Assert.assertArrayEquals;
  */
 public class XorTest {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private final static Logger log = LoggerFactory.getLogger(XorTest.class);
 
     private static final String KEY = "6ae51a0e-2051-4fca-a9d3-402e74d42e8d";
 
 
     @Test
-    public void roundTripXor() throws IOException {
+    public void roundTripXorByte() throws IOException {
         String inString = "s";
         byte[] in = inString.getBytes();
         ByteArrayInputStream bis = new ByteArrayInputStream(in);
@@ -52,11 +47,10 @@ public class XorTest {
     }
 
     @Test
-    public void roundTripComplete() {
+    public void roundTripXorFile() {
         try {
-            Path root = Paths.get("src/test/resources/forCompress");
+            Path root = Paths.get("src/test/resources/forCompress/test.txt");
             Path inter = Paths.get("build/inter.txt");
-            log.info(inter.toAbsolutePath().normalize().toString());
             pack(root, inter);
 
             Path output = Paths.get("build/output.txt");
@@ -66,40 +60,54 @@ public class XorTest {
         }
     }
 
-    public static void pack(final Path folder, final Path interPath) throws IOException {
-
-        FileOutputStream fos = new FileOutputStream(interPath.toFile());
-        OutputStream b64os = Base64.getEncoder().wrap(fos);
-        XorOutputStream xoros = new XorOutputStream(b64os, KEY);
-        ZipOutputStream zos = new ZipOutputStream(xoros);
-        Files.walkFileTree(folder, new SimpleFileVisitor<Path>() {
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                zos.putNextEntry(new ZipEntry(folder.relativize(file).toString()));
-                Files.copy(file, zos);
-                zos.closeEntry();
-                return FileVisitResult.CONTINUE;
-            }
-
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                if (dir.endsWith(".git")) {
-                    return FileVisitResult.SKIP_SUBTREE;
-                }
-                if (dir.endsWith(".gradle")) {
-                    return FileVisitResult.SKIP_SUBTREE;
-                }
-
-                zos.putNextEntry(new ZipEntry(folder.relativize(dir).toString() + "/"));
-                zos.closeEntry();
-                return FileVisitResult.CONTINUE;
-            }
-        });
+    @Test
+    public void roundTripXorLog() {
+        try {
+            Path root = Paths.get("src.zip");
+            log(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void unpack(final Path interPath, final Path zipPath) throws IOException {
-        FileInputStream fis = new FileInputStream(interPath.toFile());
+    public static void log(final Path in) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        OutputStream b64os = Base64.getEncoder().wrap(bos);
+        XorOutputStream xoros = new XorOutputStream(b64os, KEY);
+        FileInputStream fis = new FileInputStream(in.toFile());
+        IOUtils.copy(fis, xoros);
+        fis.close();
+        xoros.close();
+        byte[] bytes = bos.toByteArray();
+
+
+        String s = new String(bytes);
+        Iterable<String> split = Splitter.fixedLength(100000).split(s);
+
+        for (String s1 : split) {
+            log.info(s1);
+        }
+
+
+    }
+
+    public static void pack(final Path in, final Path out) throws IOException {
+        FileOutputStream fos = new FileOutputStream(out.toFile());
+        OutputStream b64os = Base64.getEncoder().wrap(fos);
+        XorOutputStream xoros = new XorOutputStream(b64os, KEY);
+        FileInputStream fis = new FileInputStream(in.toFile());
+        IOUtils.copy(fis, xoros);
+        fis.close();
+        xoros.close();
+    }
+
+    public static void unpack(final Path in, final Path out) throws IOException {
+        FileInputStream fis = new FileInputStream(in.toFile());
         InputStream b64is = Base64.getDecoder().wrap(fis);
         XorInputStream xoris = new XorInputStream(b64is, KEY);
-        FileOutputStream fos = new FileOutputStream(zipPath.toFile());
+        FileOutputStream fos = new FileOutputStream(out.toFile());
         IOUtils.copy(xoris, fos);
+        fis.close();
+        xoris.close();
     }
 }
